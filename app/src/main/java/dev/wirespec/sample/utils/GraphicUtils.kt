@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.view.View
 import androidx.appcompat.widget.LinearLayoutCompat
 
-
 class GraphicUtils {
 
     fun createBitmapFromView(view: View, width: Int, height: Int): Bitmap {

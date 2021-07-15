@@ -44,14 +44,12 @@ class CatView(ctx: Context, onBitmapCreated: (bitmap: Bitmap?) -> Unit) : Linear
             }
         })
     }
-
 }
 
 @Composable
 fun CatInfo() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
-
             painter = painterResource(id = R.drawable.cat),
             contentDescription = null,
             contentScale = ContentScale.Fit
