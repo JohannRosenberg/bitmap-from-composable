@@ -3,6 +3,7 @@ package dev.wirespec.sample.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.compose.foundation.Image
@@ -15,7 +16,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.sp
-import dev.wirespec.sample.App
 import dev.wirespec.sample.R
 import dev.wirespec.sample.utils.GraphicUtils
 
@@ -24,7 +24,12 @@ import dev.wirespec.sample.utils.GraphicUtils
 class CatView(ctx: Context, onBitmapCreated: (bitmap: Bitmap) -> Unit) : LinearLayoutCompat(ctx) {
 
     init {
-        val view = App.context.currentActivity?.getLayoutInflater()?.inflate(R.layout.layout_cat_info, null) as ComposeView
+        val width = 600
+        val height = 670
+
+        val view = ComposeView(ctx)
+        view.visibility = View.GONE
+        view.layoutParams = LayoutParams(width, height)
         this.addView(view)
 
         view.setContent {
@@ -34,7 +39,7 @@ class CatView(ctx: Context, onBitmapCreated: (bitmap: Bitmap) -> Unit) : LinearL
         viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 val graphicUtils = GraphicUtils()
-                val bitmap = graphicUtils.createBitmapFromView(view = view, width = 600, height = 670)
+                val bitmap = graphicUtils.createBitmapFromView(view = view, width = width, height = height)
                 onBitmapCreated(bitmap)
                 viewTreeObserver.removeOnGlobalLayoutListener(this)
             }
