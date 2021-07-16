@@ -3,7 +3,6 @@ package dev.wirespec.sample.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.compose.foundation.Image
@@ -22,23 +21,20 @@ import dev.wirespec.sample.utils.GraphicUtils
 
 @SuppressLint("ViewConstructor")
 @ExperimentalMaterialApi
-class CatView(ctx: Context, onBitmapCreated: (bitmap: Bitmap?) -> Unit) : LinearLayoutCompat(ctx) {
-
-    var bitmap: Bitmap? = null
+class CatView(ctx: Context, onBitmapCreated: (bitmap: Bitmap) -> Unit) : LinearLayoutCompat(ctx) {
 
     init {
-        val view = App.context.currentActivity?.getLayoutInflater()?.inflate(R.layout.layout_cat_info, null) as View
+        val view = App.context.currentActivity?.getLayoutInflater()?.inflate(R.layout.layout_cat_info, null) as ComposeView
         this.addView(view)
-        val cview = view.findViewById<ComposeView>(R.id.compose_view)
 
-        cview.setContent {
+        view.setContent {
             CatInfo()
         }
 
         viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 val graphicUtils = GraphicUtils()
-                bitmap = graphicUtils.createBitmapFromView(view = cview, width = 600, height = 670)
+                val bitmap = graphicUtils.createBitmapFromView(view = view, width = 600, height = 670)
                 onBitmapCreated(bitmap)
                 viewTreeObserver.removeOnGlobalLayoutListener(this)
             }

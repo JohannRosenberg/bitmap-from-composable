@@ -65,7 +65,7 @@ fun MainUI(onBitmapCreated: (bitmap: Bitmap?) -> Unit) {
 
         AndroidView(
             factory = { context ->
-                val catView = CatView(ctx = context) {bitmap ->
+                val catView = CatView(ctx = context) { bitmap ->
                     onBitmapCreated(bitmap)
                 }
 
